@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.List;
 
 public class TraceParser {
 
@@ -39,7 +39,9 @@ public class TraceParser {
 
     private final TraceRecords[] parseTable = createParseTable();
     private final ByteBuffer byteBuffer = ByteBuffer.allocate(2048);
-    private final HashMap<Long, Short> entities = new HashMap<Long, Short>();
+
+    private final HashMap<Long, MsgObj> messages = new HashMap<>();
+    private final Deque<Long> turnStack = new ArrayDeque<Long>();
 
 
     private TraceRecords[] createParseTable() {
@@ -79,12 +81,17 @@ public class TraceParser {
     public void parse(String path) {
         File traceFile = new File(path);
 
+        long trackingId = -1;
         try {
             FileInputStream fis = new FileInputStream(traceFile);
             FileChannel channel = fis.getChannel();
 
             channel.read(byteBuffer);
             byteBuffer.flip();
+
+            long currentActivityId = -1;
+
+            int testCount = 0;
 
             while(channel.position() < channel.size() || byteBuffer.remaining() > 0) {
                 if (!byteBuffer.hasRemaining()) {
@@ -107,7 +114,6 @@ public class TraceParser {
                         long activityId = byteBuffer.getLong();
                         short symboldId = byteBuffer.getShort();
                         readSourceSection();
-                        entities.put(activityId, symboldId);
                         assert byteBuffer.position() == start + (TraceRecords.ActivityCreation.getByteSize() + 1);
                         break;
                     case ActivityCompletion:
@@ -115,29 +121,37 @@ public class TraceParser {
                         break;
                     case DynamicScopeStart:
                         long id = byteBuffer.getLong();
-                        entities.put(id, (short)0);
+                        if(type == Marker.TURN_START) {
+                            turnStack.push(id);
+                        }
                         readSourceSection();
                         assert byteBuffer.position() == start + (TraceRecords.DynamicScopeStart.getByteSize() + 1);
                         break;
                     case DynamicScopeEnd:
+                        if(type == Marker.TURN_END) {
+                            turnStack.remove();
+                        }
                         assert byteBuffer.position() == start + (TraceRecords.DynamicScopeEnd.getByteSize() + 1);
                         break;
                     case SendOp:
-
                         long entityId = byteBuffer.getLong();
                         long targetId = byteBuffer.getLong();
-                        if(type == Marker.ACTOR_MSG_SEND) {
-                            if(entities.containsKey(targetId)) {
-                                System.out.println(String.format("Message entity %d to %d", entityId, targetId));
+                        if (type == Marker.ACTOR_MSG_SEND) {
+                            if (turnStack.size() > 0 /* && entityId != turnStack.peek() */) {
+                                if(entityId == turnStack.peek()) {
+                                    System.out.println("Turn same as send...");
+                                }
+                                messages.put(entityId, new MsgObj(entityId ,currentActivityId, targetId, turnStack.peek()));
                             } else {
-                                System.out.println(String.format("Message entity %d to unknown entity %d", entityId, targetId));
+                                messages.put(entityId, new MsgObj(entityId ,currentActivityId, targetId));
                             }
 
-                            if (entities.containsKey(entityId)) {
+                            if(testCount == 1)
+                                trackingId = entityId;
 
-                                System.out.println("WOW");
-                            }
+                            testCount++;
                         }
+
                         assert byteBuffer.position() == start + (TraceRecords.SendOp.getByteSize() + 1);
                         break;
                     case ReceiveOp:
@@ -156,22 +170,31 @@ public class TraceParser {
                         assert byteBuffer.position() == start + (TraceRecords.ImplThread.getByteSize() + 1);
                         break;
                     case ImplThreadCurrentActivity:
-                        long currentActivityId = byteBuffer.getLong();
+                        currentActivityId = byteBuffer.getLong();
                         int currentActivityBufferId = byteBuffer.getInt();
                         assert byteBuffer.position() == start + (TraceRecords.ImplThreadCurrentActivity.getByteSize() + 1);
                         break;
                     default:
                         assert false;
                 }
-
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        MsgObj message = messages.get(trackingId);
+
+        while(message.parentMsgId != -1) {
+            System.out.println("Going up");
+            if (messages.containsKey(message.parentMsgId)) {
+                message = messages.get(message.parentMsgId);
+            } else {
+                System.out.println("Message not found?!");
+                break;
+            }
+        }
     }
 
     private void readSourceSection() {
