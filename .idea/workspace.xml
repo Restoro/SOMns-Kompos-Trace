@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3053787-fd68-498e-a58d-1903e8dda5dd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ssw/k01555054/MsgObj.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ssw/k01555054/PromiseObj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/Marker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/Marker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/MsgObj.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/MsgObj.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/TraceParser$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/TraceParser$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/TraceParser$TraceRecords.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/TraceParser$TraceRecords.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/TraceParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Parser/ssw/k01555054/TraceParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ssw/k01555054/MsgObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ssw/k01555054/MsgObj.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ssw/k01555054/TraceParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ssw/k01555054/TraceParser.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -23,12 +29,24 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/TraceParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="179" column="13" lean-forward="true" selection-start-line="179" selection-start-column="13" selection-end-line="179" selection-end-column="13" />
+            <state relative-caret-position="447">
+              <caret line="159" column="116" selection-start-line="159" selection-start-column="116" selection-end-line="159" selection-end-column="116" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1347#1353#0" expanded="true" />
+                <element signature="e#1033#1039#0" expanded="true" />
+                <element signature="e#1143#1157#0" expanded="true" />
+                <element signature="e#1316#1324#0" expanded="true" />
+                <element signature="e#8625#8633#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/PromiseObj.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -36,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/MsgObj.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+            <state relative-caret-position="102">
+              <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -86,6 +104,7 @@
         <option value="$PROJECT_DIR$/src/k01555054/ssw/TraceParser.java" />
         <option value="$PROJECT_DIR$/src/ssw/k01555054/Marker.java" />
         <option value="$PROJECT_DIR$/src/ssw/k01555054/Main.java" />
+        <option value="$PROJECT_DIR$/src/ssw/k01555054/PromiseObj.java" />
         <option value="$PROJECT_DIR$/src/ssw/k01555054/MsgObj.java" />
         <option value="$PROJECT_DIR$/src/ssw/k01555054/TraceParser.java" />
       </list>
@@ -94,8 +113,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
-    <option name="width" value="2578" />
-    <option name="height" value="1408" />
+    <option name="width" value="2579" />
+    <option name="height" value="1409" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -182,10 +201,20 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1933" height="1053" extended-state="6" />
+    <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17226666" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17382617" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -194,15 +223,15 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.23293608" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.50270855" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23239437" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.34507042" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32936078" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32997987" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32897383" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32936078" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32897383" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -213,15 +242,15 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
   </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((PromiseObj)((HashMap.Entry)((HashMap)((TraceParser)this).toResolvePromises).entrySet().toArray()[1]).getValue()).promiseId" custom="ssw.k01555054.TraceParser,java.util.HashMap.Entry,ssw.k01555054.TraceParser.PromiseObj,java.util.HashMap" />
+      </configuration>
+    </watches-manager>
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/entities/ActivityType.java" />
-    <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/Marker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="49" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -229,20 +258,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/Marker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="49" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/PromiseObj.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/MsgObj.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+        <state relative-caret-position="102">
+          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ssw/k01555054/TraceParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="179" column="13" lean-forward="true" selection-start-line="179" selection-start-column="13" selection-end-line="179" selection-end-column="13" />
+        <state relative-caret-position="447">
+          <caret line="159" column="116" selection-start-line="159" selection-start-column="116" selection-end-line="159" selection-end-column="116" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1347#1353#0" expanded="true" />
+            <element signature="e#1033#1039#0" expanded="true" />
+            <element signature="e#1143#1157#0" expanded="true" />
+            <element signature="e#1316#1324#0" expanded="true" />
+            <element signature="e#8625#8633#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -6,12 +6,12 @@ public class MsgObj {
     long receiverId;
     long parentMsgId;
 
-    public MsgObj(long messageId, long senderId, long receiverId) {
+    public MsgObj(long messageId, long senderId, long parentMsgId) {
         this.messageId = messageId;
         this.senderId = senderId;
-        this.receiverId = receiverId;
-        this.parentMsgId = -1;
+        this.parentMsgId = parentMsgId;
     }
+
 
     public MsgObj(long messageId,long senderId, long receiverId, long parentMsgId) {
         this.messageId = messageId;

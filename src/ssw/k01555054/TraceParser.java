@@ -1,5 +1,7 @@
 package ssw.k01555054;
 
+import sun.plugin2.message.Message;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,11 +39,14 @@ public class TraceParser {
         }
     }
 
+    private final List<Long> turns = new ArrayList<Long>();
     private final TraceRecords[] parseTable = createParseTable();
     private final ByteBuffer byteBuffer = ByteBuffer.allocate(2048);
 
-    private final HashMap<Long, MsgObj> messages = new HashMap<>();
-    private final Deque<Long> turnStack = new ArrayDeque<Long>();
+    private final HashMap<Long, MsgObj> messages = new HashMap<Long, MsgObj>();
+
+    private final List<Long> toResolvePromises = new ArrayList<Long>();
+
 
 
     private TraceRecords[] createParseTable() {
@@ -82,6 +87,7 @@ public class TraceParser {
         File traceFile = new File(path);
 
         long trackingId = -1;
+        long currentTurn = -1;
         try {
             FileInputStream fis = new FileInputStream(traceFile);
             FileChannel channel = fis.getChannel();
@@ -121,35 +127,39 @@ public class TraceParser {
                         break;
                     case DynamicScopeStart:
                         long id = byteBuffer.getLong();
+                        turns.add(id);
                         if(type == Marker.TURN_START) {
-                            turnStack.push(id);
+                            currentTurn = id;
+                            if(toResolvePromises.contains(id)) {
+                                MsgObj message = messages.get(id);
+                                message.receiverId = currentActivityId;
+                                toResolvePromises.remove(id);
+                            }
                         }
+
                         readSourceSection();
                         assert byteBuffer.position() == start + (TraceRecords.DynamicScopeStart.getByteSize() + 1);
                         break;
                     case DynamicScopeEnd:
-                        if(type == Marker.TURN_END) {
-                            turnStack.remove();
-                        }
                         assert byteBuffer.position() == start + (TraceRecords.DynamicScopeEnd.getByteSize() + 1);
                         break;
                     case SendOp:
                         long entityId = byteBuffer.getLong();
                         long targetId = byteBuffer.getLong();
-                        if (type == Marker.ACTOR_MSG_SEND) {
-                            if (turnStack.size() > 0 /* && entityId != turnStack.peek() */) {
-                                if(entityId == turnStack.peek()) {
-                                    System.out.println("Turn same as send...");
-                                }
-                                messages.put(entityId, new MsgObj(entityId ,currentActivityId, targetId, turnStack.peek()));
-                            } else {
-                                messages.put(entityId, new MsgObj(entityId ,currentActivityId, targetId));
-                            }
 
-                            if(testCount == 1)
+                        if (type == Marker.ACTOR_MSG_SEND) {
+                            messages.put(entityId, new MsgObj(entityId ,currentActivityId, targetId, currentTurn));
+
+                            if(testCount == 2)
                                 trackingId = entityId;
 
                             testCount++;
+                        }
+
+                        if(type == Marker.PROMISE_MSG_SEND) {
+                            messages.put(entityId, new PromiseObj(entityId, currentActivityId, currentTurn, targetId));
+                            // Need to retrieve Target from turn
+                            toResolvePromises.add(entityId);
                         }
 
                         assert byteBuffer.position() == start + (TraceRecords.SendOp.getByteSize() + 1);
@@ -184,17 +194,32 @@ public class TraceParser {
             e.printStackTrace();
         }
 
-        MsgObj message = messages.get(trackingId);
+        List<MsgObj> stackTrace = getStrackTraceOfMessage(trackingId);
+
+        System.out.println("Origin of " + trackingId + " is the root " + stackTrace.get(stackTrace.size()-1).messageId);
+    }
+
+    public List<MsgObj> getStrackTraceOfMessage(long messageId) {
+        List<MsgObj> stackTrace = new ArrayList<MsgObj>();
+
+        if (!messages.containsKey(messageId)) {
+            throw new IllegalArgumentException();
+        }
+
+        MsgObj message = messages.get(messageId);
+        stackTrace.add(message);
 
         while(message.parentMsgId != -1) {
-            System.out.println("Going up");
             if (messages.containsKey(message.parentMsgId)) {
                 message = messages.get(message.parentMsgId);
+                stackTrace.add(message);
             } else {
                 System.out.println("Message not found?!");
                 break;
             }
         }
+
+        return stackTrace;
     }
 
     private void readSourceSection() {
